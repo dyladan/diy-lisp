@@ -14,6 +14,11 @@ def parse(source):
     """Parse string representation of one *single* expression
     into the corresponding Abstract Syntax Tree."""
 
+    if source == "#t":
+        return True
+    if source == "#f":
+        return False
+
     return source
     raise NotImplementedError("DIY")
 
