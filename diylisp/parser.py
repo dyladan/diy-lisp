@@ -14,6 +14,9 @@ def parse(source):
     """Parse string representation of one *single* expression
     into the corresponding Abstract Syntax Tree."""
 
+
+    if source[0] == ")":
+        raise LispError
     if source[0] == "(":
         close = find_matching_paren(source)
         contents = source[1:close]
