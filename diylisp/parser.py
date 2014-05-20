@@ -14,6 +14,9 @@ def parse(source):
     """Parse string representation of one *single* expression
     into the corresponding Abstract Syntax Tree."""
 
+    if is_boolean(source):
+        return source
+
     source = remove_comments(source)
     source = " ".join(source.split())
 
