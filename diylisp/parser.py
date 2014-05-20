@@ -17,7 +17,7 @@ def parse(source):
     if source[0] == "(":
         close = find_matching_paren(source)
         contents = source[1:close]
-        exps = contents.split()
+        exps = split_exps(contents)
         return map(parse, exps)
 
     if source == "#t":
