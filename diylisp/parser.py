@@ -14,8 +14,14 @@ def parse(source):
     """Parse string representation of one *single* expression
     into the corresponding Abstract Syntax Tree."""
 
+
+
     if source[0] == "(":
         close = find_matching_paren(source)
+
+        if len(source) > close+1:
+            raise LispError("Expected EOF")
+
         contents = source[1:close]
         exps = split_exps(contents)
         return map(parse, exps)
