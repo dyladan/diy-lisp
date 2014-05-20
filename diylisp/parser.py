@@ -18,6 +18,9 @@ def parse(source):
     source = " ".join(source.split())
 
 
+    if source[0] == "'":
+        source = "(quote %s)" % source[1:]
+
     if source[0] == "(":
         close = find_matching_paren(source)
 
