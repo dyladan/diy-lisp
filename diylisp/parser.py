@@ -14,6 +14,8 @@ def parse(source):
     """Parse string representation of one *single* expression
     into the corresponding Abstract Syntax Tree."""
 
+    source = " ".join(source.split())
+
 
     if source[0] == "(":
         close = find_matching_paren(source)
