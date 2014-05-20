@@ -14,10 +14,21 @@ def parse(source):
     """Parse string representation of one *single* expression
     into the corresponding Abstract Syntax Tree."""
 
+    if source[0] == "(":
+        close = find_matching_paren(source)
+        contents = source[1:close]
+        exps = contents.split()
+        return map(parse, exps)
+
     if source == "#t":
         return True
     if source == "#f":
         return False
+
+    try:
+        return int(source)
+    except:
+        pass
 
     return source
     raise NotImplementedError("DIY")
