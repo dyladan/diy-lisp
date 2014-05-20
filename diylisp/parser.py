@@ -14,6 +14,7 @@ def parse(source):
     """Parse string representation of one *single* expression
     into the corresponding Abstract Syntax Tree."""
 
+    return source
     raise NotImplementedError("DIY")
 
 ##
