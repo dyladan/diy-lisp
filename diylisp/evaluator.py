@@ -20,45 +20,51 @@ def evaluate(ast, env):
     
 
     if is_list(ast):
+        if ast[0] == "quote":
+            return ast[1]
 
-        evald = []
-        for exp in ast:
-            evald.append(evaluate(exp, env))
-            if ast[0] == "quote":
-                return ast[1]
+        if ast[0] == "define":
+            if not len(ast) == 3:
+                raise LispError("Wrong number of arguments")
+            if not is_symbol(ast[1]):
+                raise LispError("non-symbol")
+            env.set(ast[1], evaluate(ast[2], env))
+            return
 
         if ast[0] == "if":
-            if evald[1]:
-                return evald[2]
+            if evaluate(ast[1], env):
+                return evaluate(ast[2], env)
             else:
-                return evald[3]
+                return evaluate(ast[3], env)
 
         if ast[0] == "atom":
-            return is_atom(evald[1])
+            return is_atom(evaluate(ast[1], env))
 
         if ast[0] == "eq":
-            if not is_atom(evald[1]) or not is_atom(evald[2]):
+            if not is_atom(evaluate(ast[1], env)) or not is_atom(evaluate(ast[2], env)):
                 return False
-            return evald[1] == evald[2]
+            return evaluate(ast[1], env) == evaluate(ast[2], env)
 
         try:
             if ast[0] == "+":
-                return evald[1] + evald[2]
+                return evaluate(ast[1], env) + evaluate(ast[2], env)
             if ast[0] == "-":
-                return evald[1] - evald[2]
+                return evaluate(ast[1], env) - evaluate(ast[2], env)
             if ast[0] == "/":
-                return evald[1] / evald[2]
+                return evaluate(ast[1], env) / evaluate(ast[2], env)
             if ast[0] == "*":
-                return evald[1] * evald[2]
+                return evaluate(ast[1], env) * evaluate(ast[2], env)
             if ast[0] == "mod":
-                return evald[1] % evald[2]
+                return evaluate(ast[1], env) % evaluate(ast[2], env)
             if ast[0] == "<":
-                return evald[1] < evald[2]
+                return evaluate(ast[1], env) < evaluate(ast[2], env)
             if ast[0] == ">":
-                return evald[1] > evald[2]
+                return evaluate(ast[1], env) > evaluate(ast[2], env)
         except TypeError:
             raise LispError("TypeError")
 
 
-    return ast
-    raise NotImplementedError("DIY")
+    if is_symbol(ast):
+        return env.lookup(ast)
+    else:
+        return ast
