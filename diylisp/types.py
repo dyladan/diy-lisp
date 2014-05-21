@@ -37,4 +37,4 @@ class Environment:
         raise NotImplementedError("DIY")
 
     def set(self, symbol, value):
-        raise NotImplementedError("DIY")
+        self.variables[symbol] = value
