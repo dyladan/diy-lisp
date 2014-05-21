@@ -17,15 +17,42 @@ in a day, after all.)
 def evaluate(ast, env):
     """Evaluate an Abstract Syntax Tree in the specified environment."""
 
+    
+
     if is_list(ast):
-        if ast[0] == "quote":
-            return ast[1]
+
+        evald = []
+        for exp in ast:
+            evald.append(evaluate(exp, env))
+            if ast[0] == "quote":
+                return ast[1]
 
         if ast[0] == "atom":
-            return is_atom(evaluate(ast[1], env))
+            return is_atom(evald[1])
 
         if ast[0] == "eq":
-            return ast[1] == ast[2]
+            if not is_atom(evald[1]) or not is_atom(evald[2]):
+                return False
+            return evald[1] == evald[2]
+
+        try:
+            if ast[0] == "+":
+                return evald[1] + evald[2]
+            if ast[0] == "-":
+                return evald[1] - evald[2]
+            if ast[0] == "/":
+                return evald[1] / evald[2]
+            if ast[0] == "*":
+                return evald[1] * evald[2]
+            if ast[0] == "mod":
+                return evald[1] % evald[2]
+            if ast[0] == "<":
+                return evald[1] < evald[2]
+            if ast[0] == ">":
+                return evald[1] > evald[2]
+        except TypeError:
+            raise LispError("TypeError")
+
 
     return ast
     raise NotImplementedError("DIY")
