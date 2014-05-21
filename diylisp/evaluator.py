@@ -24,5 +24,8 @@ def evaluate(ast, env):
         if ast[0] == "atom":
             return is_atom(evaluate(ast[1], env))
 
+        if ast[0] == "eq":
+            return ast[1] == ast[2]
+
     return ast
     raise NotImplementedError("DIY")
