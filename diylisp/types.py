@@ -32,6 +32,8 @@ class Environment:
         raise NotImplementedError("DIY")
 
     def extend(self, variables):
+        variables = dict(self.variables.items() + variables.items())
+        return Environment(variables)
         raise NotImplementedError("DIY")
 
     def set(self, symbol, value):
